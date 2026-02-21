@@ -1,0 +1,88 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="row">
+
+  <% listings.forEach(listing => { %>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+
+      <div class="listing-card">
+
+        <div class="img-wrapper">
+          <img 
+            src="<%= listing.image.url %>" 
+            class="listing-img"
+            loading="lazy"
+          >
+        </div>
+
+        <div class="listing-body">
+
+          <h5 class="fw-bold mb-1">
+            <%= listing.title %>
+          </h5>
+
+          <p class="text-muted mb-1">
+            <%= listing.location %>, <%= listing.country %>
+          </p>
+
+          <p class="price">
+            ₹ <%= listing.price %> / night
+          </p>
+
+          <a href="/listings/<%= listing._id %>" class="view-btn">
+            View Details
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  <% }) %>
+
+</div>
+
+<!-- ================= PAGINATION ================= -->
+
+<% if(totalPages > 1) { %>
+
+<div class="d-flex justify-content-center mt-5">
+
+  <nav>
+    <ul class="pagination">
+
+      <% if(currentPage > 1) { %>
+        <li class="page-item">
+          <a class="page-link"
+             href="/listings?page=<%= currentPage - 1 %>&search=<%= search || '' %>">
+            Previous
+          </a>
+        </li>
+      <% } %>
+
+      <% for(let i = 1; i <= totalPages; i++) { %>
+        <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+          <a class="page-link"
+             href="/listings?page=<%= i %>&search=<%= search || '' %>">
+            <%= i %>
+          </a>
+        </li>
+      <% } %>
+
+      <% if(currentPage < totalPages) { %>
+        <li class="page-item">
+          <a class="page-link"
+             href="/listings?page=<%= currentPage + 1 %>&search=<%= search || '' %>">
+            Next
+          </a>
+        </li>
+      <% } %>
+
+    </ul>
+  </nav>
+
+</div>
+
+<% } %>
